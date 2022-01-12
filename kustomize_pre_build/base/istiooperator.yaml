@@ -1,0 +1,24 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istio
+spec:
+  meshConfig:
+    enableAutoMtls: true
+    accessLogFile: /dev/stdout
+    defaultConfig:
+      holdApplicationUntilProxyStarts: true
+  components:
+    base:
+      enabled: true
+    pilot:
+      enabled: true
+      k8s:
+        hpaSpec:
+          minReplicas: 3
+    egressGateways:
+      - name: istio-ingressgateway
+        enabled: false
+    ingressGateways:
+      - name: istio-ingressgateway
+        enabled: false
