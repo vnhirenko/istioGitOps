@@ -37,11 +37,14 @@ data:
     networks: {}
 
   mesh: |-
+    accessLogFile: /dev/stdout
     defaultConfig:
       discoveryAddress: istiod.istio-system.svc:15012
+      holdApplicationUntilProxyStarts: true
       tracing:
         zipkin:
           address: zipkin.istio-system:9411
+    enableAutoMtls: true
     enablePrometheusMerge: true
     rootNamespace: istio-system
     trustDomain: cluster.local
@@ -72,7 +75,7 @@ data:
           }
         },
         "externalIstiod": false,
-        "hub": "gcr.io/istio-testing",
+        "hub": "docker.io/istio",
         "imagePullPolicy": "",
         "imagePullSecrets": [],
         "istioNamespace": "istio-system",
@@ -148,7 +151,7 @@ data:
         "sts": {
           "servicePort": 0
         },
-        "tag": "latest",
+        "tag": "1.9.9",
         "tracer": {
           "datadog": {
             "address": "$(HOST_IP):8126"
@@ -978,6 +981,7 @@ metadata:
     istio: pilot
     release: istio
 spec:
+  replicas: 3
   strategy:
     rollingUpdate:
       maxSurge: 100%
@@ -1004,7 +1008,7 @@ spec:
         fsGroup: 1337
       containers:
         - name: discovery
-          image: "gcr.io/istio-testing/pilot:latest"
+          image: "docker.io/istio/pilot:1.9.9"
           args:
           - "discovery"
           - --monitoringAddr=:15014
@@ -1122,31 +1126,6 @@ spec:
       - name: config-volume
         configMap:
           name: istio
----
-# Source: istio-discovery/templates/autoscale.yaml
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: istiod
-  namespace: istio-system
-  labels:
-    app: istiod
-    release: istio
-    istio.io/rev: default
-    install.operator.istio.io/owning-resource: unknown
-    operator.istio.io/component: "Pilot"
-spec:
-  maxReplicas: 5
-  minReplicas: 1
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: istiod
-  metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 80
 ---
 # Source: istio-discovery/templates/telemetryv2_1.8.yaml
 # Note: metadata exchange filter is wasm enabled only in sidecars.
