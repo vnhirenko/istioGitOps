@@ -1,5 +1,6 @@
 pilot:
-  autoscaleMin: 3
+  replicaCount: 3
+  autoscaleEnabled: false
 meshConfig:
   rootNamespace: istio-system
   enableAutoMtls: true
