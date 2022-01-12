@@ -1,0 +1,8 @@
+pilot:
+  autoscaleMin: 3
+meshConfig:
+  rootNamespace: istio-system
+  enableAutoMtls: true
+  accessLogFile: /dev/stdout
+  defaultConfig:
+    holdApplicationUntilProxyStarts: true
