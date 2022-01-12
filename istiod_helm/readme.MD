@@ -7,4 +7,5 @@ cd istio-$ISTIO_VERSION
 cp -a  manifests/charts/base/ ${path_to_repo}/operator_helm/
 cp -a  manifests/charts/istio-control/istio-discovery/ ${path_to_repo}/operator_helm/
 ```
-2. Add values_custom.yaml
+2. Add values_custom.yaml to istio-discovery 
+2. Remove kustomization.yaml for istio-discovery and base
