@@ -1,8 +1,8 @@
 1. There are two ways to get operator manifests
 
-  a) Download generated manifests from the repo and change image docker registry and version and set number of istiod replicas
+  a) Download generated manifests from the repo and change image docker registry and version and set number of istiod replicas. Where 1.9.9 is itio version
     - https://raw.githubusercontent.com/istio/istio/1.9.9/manifests/charts/base/files/gen-istio-cluster.yaml
-    - https://github.com/istio/istio/blob/1.9.9/manifests/charts/istio-control/istio-discovery/files/gen-istio.yaml
+    - https://raw.githubusercontent.com/istio/istio/1.9.9/manifests/charts/istio-control/istio-discovery/files/gen-istio.yaml
 
   b) Use helm template
   ```
