@@ -16,3 +16,5 @@
 ```
 2. create overlays (/dev/overrides)
 3. generate kustomization.yaml (depend on way from p.1)
+
+Note! Do not set namespace because istio-operator should be installed to instio-system namespace.
